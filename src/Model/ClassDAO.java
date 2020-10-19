@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class ClassDAO {
     private Connection connection;
@@ -15,17 +14,17 @@ public class ClassDAO {
     }
 
     public Object[] readClass() {
-        ArrayList<Class> classes = new ArrayList<Class>();
+        ArrayList<Classes> classes = new ArrayList<Classes>();
         try {
             Statement statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("select * from class");
+            ResultSet result = statement.executeQuery("select * from class where fk_user = user.id");
             while(result.next()) {
-                Class newClass = new Class();
-                newClass.id = result.getInt("id");
-                newClass.code = result.getString("code");
-                newClass.name = result.getString("name");
-                newClass.fk_user = result.getInt("fk_user");
-                classes.add(newClass);
+                Classes newClasses = new Classes();
+                newClasses.id = result.getInt("id");
+                newClasses.code = result.getString("code");
+                newClasses.name = result.getString("name");
+                newClasses.fk_user = result.getInt("fk_user");
+                classes.add(newClasses);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -52,4 +51,6 @@ public class ClassDAO {
             e.printStackTrace();
         }
     }
+
+
 }

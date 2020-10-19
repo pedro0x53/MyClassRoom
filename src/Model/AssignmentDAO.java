@@ -11,14 +11,14 @@ public class AssignmentDAO {
     private Connection connection;
 
     public AssignmentDAO() {
-        connection = new ConnectionDatabase().getConnection();
+        connection =  ConnectionDatabase.getConnection();
     }
 
     public Object[] readAssignment() {
         ArrayList<Assignment> assignments = new ArrayList<Assignment>();
         try {
             Statement statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("select * from assignment");
+            ResultSet result = statement.executeQuery("select * from assignment where fk_class = class.id");
             while(result.next()) {
                 Assignment newAssignment = new Assignment();
                 newAssignment.id = result.getInt("id");
