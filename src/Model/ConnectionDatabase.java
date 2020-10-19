@@ -8,18 +8,18 @@ public class ConnectionDatabase {
     private static String user = "";
     private static String password = "";
     private static Connection connection;
+    private static ConnectionDatabase instance;
 
-    public ConnectionDatabase() {
-        try {
-            Class.forName(driver);
-            connection = DriverManager.getConnection(url, user, password);
-            //System.out.println("Conectado com sucesso");
-        } catch (Exception e) {
-            e.printStackTrace();
+    public static Connection getConnection() {
+        if (connection == null) {
+            try {
+                Class.forName(driver);
+                connection = DriverManager.getConnection(url, user, password);
+                //System.out.println("Conectado com sucesso");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-    }
-
-    public Connection getConnection() {
         return connection;
     }
 }
