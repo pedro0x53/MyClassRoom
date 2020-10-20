@@ -3,24 +3,20 @@ package View;
 import Utils.FormFields;
 
 public class Authentication {
-    private FormFields form;
-
-    public Authentication() {
-        this.form = new FormFields();
-    }
+    private FormFields ff = new FormFields();
 
     public String[] login() {
         String[] fields = new String[2];
-        fields[0] = form.askForEmail();
-        fields[1] = form.askForNonVoidField("Senha");
+        fields[0] = ff.askForTextField("Login", "Digite seu login: ", true);
+        fields[1] = fields[0] = ff.askForTextField("Senha", "Digite sua senha: ", true);
         return fields;
     }
 
     public String[] signUp() {
         String[] fields = new String[3];
-        fields[0] = form.askForNonVoidField("Nome");
-        fields[1] = form.askForEmail();
-        fields[2] = form.askForNonVoidField("Senha");
+        fields[0] = ff.askForTextField("Nome", "Digite seu nome: ", true);
+        fields[1] = ff.askForTextField("Login", "Digite seu login: ", true);
+        fields[2] = fields[0] = ff.askForTextField("Senha", "Digite sua senha: ", true);
         return fields;
     }
 }
