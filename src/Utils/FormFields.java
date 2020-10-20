@@ -52,7 +52,7 @@ public class FormFields {
             System.out.print(message);
             String field = this.keyboard.nextLine();
             if (isRequired) {
-                if (!field.isEmpty()) {
+                if (field.isEmpty()) {
                     System.out.println("O " + named + " não pode estar vazio.\n");
                 } else {
                     return field;
