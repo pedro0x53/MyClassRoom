@@ -13,11 +13,11 @@ public class SubmissionDAO {
         connection = new ConnectionDatabase().getConnection();
     }
 
-    public Object[] readSubmission() {
+    public Object[] readSubmission(int userId) {
         ArrayList<Submission> submissions = new ArrayList<Submission>();
         try {
             Statement statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("select * from submission");
+            ResultSet result = statement.executeQuery("select fk_assignment from submission where fk_user = " + userId + "and state = 0");
             while(result.next()) {
                 Submission newSubmission = new Submission();
                 newSubmission.id = result.getInt("id");

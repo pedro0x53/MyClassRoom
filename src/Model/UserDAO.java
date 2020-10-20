@@ -15,11 +15,11 @@ public class UserDAO {
     }
 
     //Retornar um array de users
-    public User[] readUser() {
+    public User[] readAllStudentsFromClass(int classId) {
         ArrayList<User> users = new ArrayList<User>();
         try {
             Statement statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("select * from user");
+            ResultSet result = statement.executeQuery("select * from user where id in (select fk_user from enrollment where id = " + classId + "");
             while(result.next()) {
                 User newUser = new User();
                 newUser.id = result.getInt("id");
@@ -52,7 +52,6 @@ public class UserDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     //Pegar so um usuario, retorna o user ( recebo, login e senha)
@@ -92,7 +91,7 @@ public class UserDAO {
         return (Classes[]) classes.toArray();
     }
 
-    public Assignment[] getMyClasses(int userId) {
+    public Assignment[] getMyAssignment(int userId) {
         ArrayList<Assignment> assignment = new ArrayList<Assignment>();
         try {
             Statement statement = connection.createStatement();
@@ -113,5 +112,4 @@ public class UserDAO {
         }
         return (Assignment []) assignment.toArray();
     }
-
 }

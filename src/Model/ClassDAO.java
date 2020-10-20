@@ -13,11 +13,30 @@ public class ClassDAO {
         connection = new ConnectionDatabase().getConnection();
     }
 
-    public Object[] readClass() {
+    public Object[] readAllClasseOwned(int userId) {
         ArrayList<Classes> classes = new ArrayList<Classes>();
         try {
             Statement statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("select * from class where fk_user = user.id");
+            ResultSet result = statement.executeQuery("select * from class where fk_user = " + userId + "");
+            while(result.next()) {
+                Classes newClasses = new Classes();
+                newClasses.id = result.getInt("id");
+                newClasses.code = result.getString("code");
+                newClasses.name = result.getString("name");
+                newClasses.fk_user = result.getInt("fk_user");
+                classes.add(newClasses);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return classes.toArray();
+    }
+
+    public Object[] readAllClassesEnrolled(int userId) {
+        ArrayList<Classes> classes = new ArrayList<Classes>();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("select * from classes where id in (select fk_class from enrollement where fk_user = " + userId + "");
             while(result.next()) {
                 Classes newClasses = new Classes();
                 newClasses.id = result.getInt("id");
@@ -51,6 +70,4 @@ public class ClassDAO {
             e.printStackTrace();
         }
     }
-
-
 }
