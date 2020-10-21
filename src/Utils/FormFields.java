@@ -29,17 +29,17 @@ public class FormFields {
         }
     }
 
-    public String askForDate(Boolean isRequired) {
+    public String askForDate(String named, String message, Boolean isRequired) {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         while (true) {
-            System.out.print("Digite uma data (dd/mm/aaaa): ");
+            System.out.print(message);
             String dateStr = this.keyboard.nextLine();
             try {
                 Date date = formatter.parse(dateStr);
                 return dateStr;
             } catch (Exception e) {
                 if (isRequired) {
-                    System.out.println("Digite uma data válida.");
+                    System.out.println("Digite uma data válida (dd/mm/aaaa).");
                 } else {
                     return "";
                 }
