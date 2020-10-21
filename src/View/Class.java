@@ -1,5 +1,6 @@
 package View;
 
+import Controller.SeeAssignmentController;
 import Model.Classes;
 import Utils.FormFields;
 import Utils.Menu;
@@ -21,9 +22,11 @@ public class Class {
         return code;
     }
 
-    public int showClasses( Classes[] classes ) {
+    public void showClasses( Classes[] classes ) {
         System.out.println("----- Turmas -----");
         String[] messages = new String[100];
+
+        SeeAssignmentController seeAssignmentController = new SeeAssignmentController();
 
         for (int i = 0; i < classes.length; i++) {
             String message = "" + classes[i].name + "";
@@ -32,7 +35,7 @@ public class Class {
 
         int answer = Menu.createMenu(messages);
 
-        return answer;
+        seeAssignmentController.allAssignment(answer);
     }
 
 }
