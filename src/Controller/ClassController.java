@@ -18,7 +18,7 @@ public class ClassController {
     public void createClass() {
         String nameClass = cl.createClass();
         String code = String.valueOf(generateCode(8));
-        System.out.println("Turma de" + nameClass + "criada");
+        System.out.println("Turma de " + nameClass + " criada");
         System.out.println("Código da turma: " + code);
 
         classDAO.insertClass(code, nameClass, id);
