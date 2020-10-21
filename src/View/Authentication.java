@@ -3,7 +3,7 @@ package View;
 import Utils.FormFields;
 
 public class Authentication {
-    private FormFields ff = new FormFields();
+    private final FormFields ff = new FormFields();
 
     public String[] login() {
         System.out.println("----- Login -----");
