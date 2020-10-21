@@ -1,5 +1,7 @@
 package Model;
 
+import View.Class;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -51,9 +53,23 @@ public class ClassDAO {
         return classes.toArray();
     }
 
-    public void insertClass(int id, String code, String name, int fk_user) {
+    public int searchClass(String code) {
+        Classes classes = new Classes();
         try {
-            String query = "insert into user (id, code, name, fk_user) values (" + id +
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("select id from classes where code = " + code + "");
+
+                classes.id = result.getInt("id");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return classes.id;
+    }
+
+    public void insertClass(String code, String name, int fk_user) {
+        try {
+            String query = "insert into class (code, name, fk_user) values (" +
                     ", '" + code + "', '" + name + "', '" + fk_user + "')";
             Statement statement = connection.createStatement();
             statement.executeUpdate(query);
