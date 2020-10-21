@@ -14,7 +14,7 @@ public class AssignmentDAO {
         connection =  ConnectionDatabase.getConnection();
     }
 
-    public Object[] readAssignment(int classId) {
+    public Object[] readAllAssignmentFromClass(int classId) {
         ArrayList<Assignment> assignments = new ArrayList<Assignment>();
         try {
             Statement statement = connection.createStatement();
@@ -53,5 +53,45 @@ public class AssignmentDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public Assignment[] readAllAssignmentsNotSubmited(int userID, int classID) {
+        ArrayList<Assignment> assignment = new ArrayList<Assignment>();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT * FROM assignment WHERE fk_class = " + classID + "AND id IN (SELECT fk_assignment FROM submission WHERE fk_user = " + userID  + " AND state = 0)");
+            while(result.next()) {
+                Assignment newAssignment = new Assignment();
+                newAssignment.id = result.getInt("id");
+                newAssignment.title = result.getString("title");
+                newAssignment.description = result.getString("description");
+                newAssignment.startDate = result.getDate("startDate");
+                newAssignment.endDate = result.getDate("endDate");
+                newAssignment.fk_class = result.getInt("fk_class");
+                assignment.add(newAssignment);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return (Assignment []) assignment.toArray();
+    }
+
+    public Assignment readAssignemnt(int assignmentID) {
+        Assignment assignment = new Assignment();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("select * from assignment where id = " + assignmentID + "");
+            while(result.next()) {
+                assignment.id = result.getInt("id");
+                assignment.title = result.getString("title");
+                assignment.description = result.getString("description");
+                assignment.startDate = result.getDate("startDate");
+                assignment.endDate = result.getDate("endDate");
+                assignment.fk_class = result.getInt("fk_class");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return assignment;
     }
 }

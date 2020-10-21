@@ -19,7 +19,7 @@ public class UserDAO {
         ArrayList<User> users = new ArrayList<User>();
         try {
             Statement statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("select * from user where id in (select fk_user from enrollment where id = " + classId + "");
+            ResultSet result = statement.executeQuery("select * from user where id in (select fk_user from enrollment where fk_class = " + classId + "");
             while(result.next()) {
                 User newUser = new User();
                 newUser.id = result.getInt("id");
@@ -69,47 +69,5 @@ public class UserDAO {
             e.printStackTrace();
         }
         return user;
-    }
-
-    public Classes[] getMyClasses(int userId) {
-        ArrayList<Classes> classes = new ArrayList<Classes>();
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("select * from class where id in (select fk_class from enrollment where " +
-                    + userId + "= fk_id)");
-            while(result.next()) {
-                Classes newClass = new Classes();
-                newClass.id = result.getInt("id");
-                newClass.code = result.getString("code");
-                newClass.name = result.getString("name");
-                newClass.fk_user = result.getInt("fk_user");
-                classes.add(newClass);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return (Classes[]) classes.toArray();
-    }
-
-    public Assignment[] getMyAssignment(int userId) {
-        ArrayList<Assignment> assignment = new ArrayList<Assignment>();
-        try {
-            Statement statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("select * from assignment where fk_class = class.id and id in (select fk_assignment from submission where fk_user =  " +
-                    + userId + "and state = 0)");
-            while(result.next()) {
-                Assignment newAssignment = new Assignment();
-                newAssignment.id = result.getInt("id");
-                newAssignment.title = result.getString("title");
-                newAssignment.description = result.getString("description");
-                newAssignment.startDate = result.getDate("startDate");
-                newAssignment.endDate = result.getDate("endDate");
-                newAssignment.fk_class = result.getInt("fk_class");
-                assignment.add(newAssignment);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return (Assignment []) assignment.toArray();
     }
 }
