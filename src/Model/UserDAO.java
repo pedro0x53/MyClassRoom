@@ -34,10 +34,9 @@ public class UserDAO {
         return (User[]) users.toArray();
     }
 
-    public void insertUser(int id, String name, String email, String password) {
+    public void insertUser(String name, String email, String password) {
         try {
-            String query = "insert into user (id, name, email, password) values (" + id +
-                    ", '" + name + "', '" + email + "', '" + password + "')";
+            String query = "insert into user (name, email, password) values (" + name + "', '" + email + "', '" + password + "')";
             Statement statement = connection.createStatement();
             statement.executeUpdate(query);
         } catch (SQLException e) {
